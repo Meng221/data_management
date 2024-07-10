@@ -1,0 +1,102 @@
+* {
+    /* font-family: "Roboto", sans-serif; */
+    font-family: "Noto Sans Lao", sans-serif;
+}
+.sidebar {
+    position: fixed;
+    z-index: 99;
+    background: #032d46;
+    height: 100vh;
+}
+.logo {
+    color: #fff;
+}
+.logo p {
+    font-size: 10px;
+    width: 180px;
+    text-align: center;
+}
+
+.content {
+    height: 100%;
+}
+.right-box {
+    left: 240px;
+    width: 84.2%;
+    height: 100vh;
+}
+
+.menu {
+    border-top: solid 1px #fff;
+    /* opacity: 0.5; */
+}
+
+.menu li a {
+    color: #fff;
+}
+.menu li a:hover,.menu-active{
+    background: #043655;
+    color: #fff !important;
+    opacity: 1 !important;
+}
+.menu .font {
+    font-size: 18px;
+}
+
+.search-notifacation {
+    height: 60px;
+    border: 1px solid red;
+}
+
+.advisor img {
+    /* height: 225px; */
+    object-fit: cover;
+}
+
+.advisor-card h5, .advisor-card a, .student-groups table  {
+    font-family: "Noto Sans Lao", sans-serif;
+}
+
+.center-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.input {
+    width: 100%;
+}
+
+.vertical-align-middle {
+    vertical-align: middle !important;
+}
+
+/* add Advisor form */
+
+.menu-active {
+    color: #fff !important;
+    background: #043655 !important;
+    opacity: 1 !important;
+}
+
+.font {
+    opacity: 0.6;
+}
+
+@media (max-width: 992px) {
+    .sidebar {
+        display: none;
+    }
+    .right-box {
+        left: 0;
+        width: 100%;
+    }
+    .display-custom {
+        display: flex;
+    }
+    .display-custom td div input {
+        width: 95%;
+    }
+}
+
