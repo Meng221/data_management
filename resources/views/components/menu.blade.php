@@ -26,21 +26,34 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
                 <li class="nav-item">
-                    <a href="{{ url('/home') }}"
+                    <a href="{{ url('home') }}"
                         class="nav-link {{ request()->routeIs('home') ? 'bg-secondary' : '' }}">
                         <i class="nav-icon bi bi-house"></i>
                         <p>ໜ້າທໍາອິດ</p>
                     </a>
                 </li>
+                @if (auth()->check())
+                    @if (auth()->user()->user_type === 'teacher')
+                        <li class="nav-item ">
+                            <a href="{{ route('show-thesis') }}"
+                                class="nav-link {{ request()->routeIs('show-thesis') ? 'bg-secondary' : '' }}">
+                                <i class="bi bi-journal-check"></i>
+                                <p>
+                                    ອະນຸຍາດການສົ່ງປື້ມ
+                                </p>
+                            </a>
+                        </li>
+                    @endif
+                @endif
                 <li class="nav-item">
-                    <a href="{{ url('comment') }}"
+                    <a href="{{ route('comment', auth()->user()->id) }}"
                         class="nav-link {{ request()->routeIs('comment') ? 'bg-secondary' : '' }}">
                         <i class="bi bi-chat-square-text"></i>
                         <p>ຄໍາເຫັນກຸ່ມປ້ອງກັນບົດ</p>
                     </a>
                 </li>
                 @if (auth()->check())
-                    @if (auth()->user()->user_type === 'teacher')
+                    @if (auth()->user()->position === 'ຫົວໜ້າພາກວິຊາ')
                         <li class="nav-item">
                             <a href="{{ route('request') }}" class="nav-link {{ request()->routeIs('#') ? 'bg-secondary' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
@@ -67,7 +80,7 @@
                         </p>
                     </a>
                 </li>
-                @if (auth()->check())
+                {{-- @if (auth()->check())
                     @if (auth()->user()->user_type === 'teacher')
                         <li class="nav-item">
                             <a href="{{ route('scores') }}"
@@ -79,7 +92,7 @@
                             </a>
                         </li>
                     @endif
-                @endif
+                @endif --}}
 
                 @if (auth()->check())
                     @if (auth()->user()->user_type === 'teacher')

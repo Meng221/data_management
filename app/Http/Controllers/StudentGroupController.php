@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\StudentGroup;
 use App\Models\Student;
 use App\Models\ThesisTopic;
-
+use Illuminate\Support\Facades\Auth;
 
 
 class StudentGroupController extends Controller
@@ -38,6 +38,7 @@ class StudentGroupController extends Controller
         );
 
         $availableGroupNumber = $this->getAvailableGroupNumber();
+        $user_id = Auth::id();
         // dd($request->all());
         $topic = ThesisTopic::create([
             'type_id' => $request->type,
@@ -58,6 +59,7 @@ class StudentGroupController extends Controller
             'system' => $request->input('system'),
             'study_time' => $request->input('study_time'),
             'advisor' => $request->input('advisor'),
+            'user_id' => $user_id,
         ]);
 
         $students = $request->input('students', []);

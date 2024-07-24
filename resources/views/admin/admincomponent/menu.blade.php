@@ -26,41 +26,31 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
                 <li class="nav-item">
-                    <a href="{{ url('/home') }}"
-                        class="nav-link {{ request()->routeIs('home') ? 'bg-secondary' : '' }}">
+                    <a href="{{route('admin.home')}}"
+                        class="nav-link {{ request()->routeIs('admin.home') ? 'bg-secondary' : '' }}">
                         <i class="nav-icon bi bi-house"></i>
-                        <p>ໜ້າທໍາອິດ</p>
+                        <p>ໜ້າທໍໍາອິດ</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('comment') }}"
-                        class="nav-link {{ request()->routeIs('comment') ? 'bg-secondary' : '' }}">
+                    <a href="{{route('admin.comment')}}"
+                        class="nav-link {{ request()->routeIs('admin.comment') ? 'bg-secondary' : '' }}">
                         <i class="bi bi-chat-square-text"></i>
                         <p>ຄໍາເຫັນກຸ່ມປ້ອງກັນບົດ</p>
                     </a>
                 </li>
-                @if (auth()->check())
-                    @if (auth()->user()->user_type === 'teacher')
-                        <li class="nav-item">
-                            <a href="{{ route('request') }}" class="nav-link {{ request()->routeIs('#') ? 'bg-secondary' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>ຄໍາຂໍອາຈານທີ່ປຶກສາ</p>
-                            </a>
-                        </li>
-                    @endif
-                @endif
                 <li class="nav-item ">
-                    <a href="{{ route('plan') }}"
-                        class="nav-link {{ request()->routeIs('plan') ? 'bg-secondary' : '' }}">
+                    <a href="{{route('admin.plan')}}"
+                        class="nav-link {{ request()->routeIs('admin.plan') ? 'bg-secondary' : '' }}">
                         <i class="bi bi-bookmark-check"></i>
                         <p>
-                            ແຜນການຕ່າງໆ
+                            ແຜນການຕ່າງ
                         </p>
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a href="{{ route('defense') }}"
-                        class="nav-link {{ request()->routeIs('defense') ? 'bg-secondary' : '' }}">
+                    <a href="{{route('admin.defense')}}"
+                        class="nav-link {{ request()->routeIs('admin.defense') ? 'bg-secondary' : '' }}">
                         <i class="nav-icon bi bi-book"></i>
                         <p>
                             ຜົນການສອບບົດຈົບຊັ້ນ
@@ -70,8 +60,8 @@
                 @if (auth()->check())
                     @if (auth()->user()->user_type === 'teacher')
                         <li class="nav-item">
-                            <a href="{{ route('scores') }}"
-                                class="nav-link {{ request()->routeIs('scores') ? 'bg-secondary' : '' }}">
+                            <a href="{{route('admin.scores')}}"
+                                class="nav-link {{ request()->routeIs('admin.scores') ? 'bg-secondary' : '' }}">
                                 <i class="nav-icon bi bi-person"></i>
                                 <p>
                                     ຄະແນນສອບບົດຈົບຊັ້ນ
@@ -84,8 +74,8 @@
                 @if (auth()->check())
                     @if (auth()->user()->user_type === 'teacher')
                         <li class="nav-item ">
-                            <a href="{{ route('thesis') }}"
-                                class="nav-link {{ request()->routeIs('thesis') ? 'bg-secondary' : '' }}">
+                            <a href="{{route('admin.thesis')}}"
+                                class="nav-link {{ request()->routeIs('admin.thesis') ? 'bg-secondary' : '' }}">
                                 <i class="bi bi-journal-check"></i>
                                 <p>
                                     ປື້ມບົດຈົບຊັ້ນ
@@ -97,7 +87,7 @@
                 @if (auth()->check())
                     @if (auth()->user()->user_type === 'teacher')
                         <li class="nav-item">
-                            <a href="/accept" class="nav-link">
+                            <a href="{{route('admin.accept')}}" class="nav-link">
                                 <i class="nav-icon bi bi-person"></i>
                                 <p>
                                     ຍອມຮັບການແກ້ໄຂ້
@@ -109,8 +99,8 @@
 
 
                 <li class="nav-item">
-                    <a href="{{ route('advisor') }}"
-                        class="nav-link {{ request()->routeIs('advisor') ? 'bg-secondary' : '' }}">
+                    <a href="{{route('admin.advisor')}}"
+                        class="nav-link {{ request()->routeIs('admin.advisor') ? 'bg-secondary' : '' }}">
                         <i class="nav-icon bi bi-person"></i>
                         <p>
                             ອາຈານທີ່ປຶກສາ
@@ -119,8 +109,8 @@
 
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('group') }}"
-                        class="nav-link {{ request()->routeIs('group') ? 'bg-secondary' : '' }}">
+                    <a href="{{route('admin.group')}}"
+                        class="nav-link {{ request()->routeIs('admin.group') ? 'bg-secondary' : '' }}">
                         <i class="nav-icon bi bi-people"></i>
                         <p>
                             ກຸ່ມທັງໝົດ

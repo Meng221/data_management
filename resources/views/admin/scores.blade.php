@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('admin.adminlayout')
 
 @section('title')
     ຍ້ອມຮັບ
@@ -29,9 +29,9 @@
                     @foreach ($thesisTopics as $topic)
                         @foreach ($topic->studentGroup->students as $student)
                             @php
-                                $scores = $topic->scoreAndComments->where('student_id', $student->id);
+                                $score = $topic->scoreAndComments->where('student_id', $student->id)->first();
                             @endphp
-                            @foreach ($scores as $score)
+                            @if ($score)
                                 <tr>
                                     <td>{{ $topic->studentGroup->group_number }}</td>
                                     <td>{{ $topic->topic_name }}</td>
@@ -45,19 +45,9 @@
                                     <td>{{ $score->presentation }}</td>
                                     <td>{{ $score->average }}</td>
                                 </tr>
-                            @endforeach
-                            @if ($scores->isEmpty())
-                                <tr>
-                                    <td>{{ $topic->studentGroup->group_number }}</td>
-                                    <td>{{ $topic->topic_name }}</td>
-                                    <td>{{ $student->name }}</td>
-                                    <td colspan="8">No scores available</td>
-                                </tr>
                             @endif
                         @endforeach
                     @endforeach
-
-
                 </tbody>
             </table>
         </div>

@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('admin.adminlayout')
 
 @section('title')
     Score
@@ -137,81 +137,6 @@
                                             disabled>
                                     </div>
                                     <div class="form-group">
-                                        <label for="lesson4">ເນື້ອໃນບົດທີ່ 4</label>
-                                        <div class="d-flex justify-content-between align-items-center gap-2">
-                                            <input type="range" class="custom-range lesson-4-range lesson-4"
-                                                min="0" max="100" value="0"
-                                                name="lesson_4_score[]">
-                                            <input type="number" class="form-control col-2 lesson-4-score"
-                                                max="100" value="0" name="lesson_4_score[]">
-                                            @error('lesson_4_score.*')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="lesson5">ເນື້ອໃນບົດທີ່ 5</label>
-                                        <div class="d-flex justify-content-between align-items-center gap-2">
-                                            <input type="range" class="custom-range lesson-5-range lesson-5"
-                                                min="0" max="100" value="0"
-                                                name="lesson_5_score[]">
-                                            <input type="number" class="form-control col-2 lesson-5-score"
-                                                max="100" value="0" name="lesson_5_score[]">
-                                            @error('lesson_5_score.*')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="document">ຄວາມສົມບູນຂອງເອກະສານ</label>
-                                        <div class="d-flex justify-content-between align-items-center gap-2">
-                                            <input type="range" class="custom-range document-range" min="0"
-                                                max="100" value="0" name="thesis_score[]">
-                                            <input type="number" class="form-control col-2 document-score"
-                                                max="100" value="0" name="thesis_score[]">
-                                            @error('thesis_score.*')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="poster">Poster</label>
-                                        <div class="d-flex justify-content-between align-items-center gap-2">
-                                            <input type="range" class="custom-range poster-range" min="0"
-                                                max="100" value="0" name="poster_score[]">
-                                            <input type="number" class="form-control col-2 poster-score"
-                                                max="100" value="0" name="poster_score[]">
-                                            @error('poster_score.*')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="project">ຄວາມສົມບູນຂອງຊີ້ນງານ</label>
-                                        <div class="d-flex justify-content-between align-items-center gap-2">
-                                            <input type="range" class="custom-range project-range" min="0"
-                                                max="100" value="0" name="project_score[]">
-                                            <input type="number" class="form-control col-2 project-score"
-                                                max="100" value="0" name="project_score[]">
-                                            @error('project_score.*')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="form-group d-flex gap-4">
-                                        <div class="custom-control custom-checkbox">
-                                            <input class="custom-control-input" type="checkbox" id="passCheckbox"
-                                                name="status" value="1">
-                                            <label for="passCheckbox" class="custom-control-label">ຜ່ານ</label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input class="custom-control-input" type="checkbox" id="failCheckbox"
-                                                name="status" value="0">
-                                            <label for="failCheckbox" class="custom-control-label">ບໍ່ຜ່ານ</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
                                         <label for="Comments">ຄໍາເຫັນ</label>
                                         <textarea id="Comments" class="form-control" rows="4" name="comment"></textarea>
                                         @error('comment')
@@ -226,7 +151,7 @@
                                 $rank = 1;
                             @endphp
                             @foreach ($group->students as $student)
-                                <div class="card card-secondary">
+                                <div class="card card-secondary collapsed-card">
                                     <div class="card-header">
                                         <h3 class="card-title">{{ $rank++ . '. ' . $student->name }}</h3>
                                         <div class="card-tools">
@@ -236,8 +161,8 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="card-body">
-                                        {{-- <div class="form-group">
+                                    <div class="card-body collapse">
+                                        <div class="form-group">
                                             <label for="student">ນັກສຶກສາ</label>
                                             <div class="row">
                                                 <input type="hidden" name="student_id[]" value="{{ $student->id }}">
@@ -252,7 +177,67 @@
                                                         disabled>
                                                 </div>
                                             </div>
-                                        </div> --}}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="lesson4">ເນື້ອໃນບົດທີ່ 4</label>
+                                            <div class="d-flex justify-content-between align-items-center gap-2">
+                                                <input type="range" class="custom-range lesson-4-range" min="0"
+                                                    max="100" value="0" name="lesson_4_score[]">
+                                                <input type="number" class="form-control col-2 lesson-4-score"
+                                                    max="100" value="0" name="lesson_4_score[]">
+                                                @error('lesson_4_score.*')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="lesson5">ເນື້ອໃນບົດທີ່ 5</label>
+                                            <div class="d-flex justify-content-between align-items-center gap-2">
+                                                <input type="range" class="custom-range lesson-5-range" min="0"
+                                                    max="100" value="0" name="lesson_5_score[]">
+                                                <input type="number" class="form-control col-2 lesson-5-score"
+                                                    max="100" value="0" name="lesson_5_score[]">
+                                                @error('lesson_5_score.*')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="document">ຄວາມສົມບູນຂອງເອກະສານ</label>
+                                            <div class="d-flex justify-content-between align-items-center gap-2">
+                                                <input type="range" class="custom-range document-range" min="0"
+                                                    max="100" value="0" name="thesis_score[]">
+                                                <input type="number" class="form-control col-2 document-score"
+                                                    max="100" value="0" name="thesis_score[]">
+                                                @error('thesis_score.*')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="poster">Poster</label>
+                                            <div class="d-flex justify-content-between align-items-center gap-2">
+                                                <input type="range" class="custom-range poster-range" min="0"
+                                                    max="100" value="0" name="poster_score[]">
+                                                <input type="number" class="form-control col-2 poster-score"
+                                                    max="100" value="0" name="poster_score[]">
+                                                @error('poster_score.*')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="project">ຄວາມສົມບູນຂອງຊີ້ນງານ</label>
+                                            <div class="d-flex justify-content-between align-items-center gap-2">
+                                                <input type="range" class="custom-range project-range" min="0"
+                                                    max="100" value="0" name="project_score[]">
+                                                <input type="number" class="form-control col-2 project-score"
+                                                    max="100" value="0" name="project_score[]">
+                                                @error('project_score.*')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <label for="presentation">ຄະແນນການນໍາສະເໜີ</label>
                                             <div class="d-flex justify-content-between align-items-center gap-2">
@@ -281,6 +266,7 @@
                                             <label for="qa">ຄະແນນລວມ</label>
                                             <input type="number" class="form-control col-2 total-score" max="100"
                                                 value="0" disabled name="total[]">
+
                                         </div>
                                     </div>
                                 </div>
@@ -319,7 +305,7 @@
                 $(card).find('.custom-range').each(function() {
                     totalScore += parseInt($(this).val()) || 0;
                 });
-                $(card).find('.total-score').val(totalScore/7);
+                $(card).find('.total-score').val(totalScore);
             }
 
             function syncRangeAndNumber(card) {
@@ -336,10 +322,6 @@
                 });
             }
 
-            $('input[type="checkbox"]').click(function() {
-                $('input[type="checkbox"]').not(this).prop('checked', false);
-            });
-
             $('.card-body').each(function() {
                 syncRangeAndNumber(this);
                 calculateTotalScore(this);
@@ -349,45 +331,5 @@
         function enableTotalScore() {
             $('.total-score').prop('disabled', false);
         }
-        // $(document).ready(function() {
-
-        //     // Function to synchronize inputs across all cards
-        //     function synchronizeInputs(source, targetRange, targetNumber) {
-        //         $(targetRange).val($(source).val());
-        //         $(targetNumber).val($(source).val());
-        //     }
-
-        //     // Synchronize range and number inputs across all cards
-        //     function addSyncListeners(rangeClass, numberClass) {
-        //         $(`.${rangeClass}`).on('input', function() {
-        //             const index = $(`.${rangeClass}`).index(this);
-        //             const value = $(this).val();
-        //             $(`.${numberClass}`).eq(index).val(value);
-
-        //             // Synchronize across all cards
-        //             $(`.${rangeClass}`).not(this).val(value);
-        //             $(`.${numberClass}`).not(this).val(value);
-        //         });
-
-        //         $(`.${numberClass}`).on('input', function() {
-        //             const index = $(`.${numberClass}`).index(this);
-        //             const value = $(this).val();
-        //             $(`.${rangeClass}`).eq(index).val(value);
-
-        //             // Synchronize across all cards
-        //             $(`.${rangeClass}`).not(this).val(value);
-        //             $(`.${numberClass}`).not(this).val(value);
-        //         });
-        //     }
-
-        //     // Apply synchronization to each group across all cards
-        //     addSyncListeners('lesson-4-range', 'lesson-4-score');
-        //     addSyncListeners('lesson-5-range', 'lesson-5-score');
-        //     addSyncListeners('document-range', 'document-score');
-        //     addSyncListeners('poster-range', 'poster-score');
-        //     addSyncListeners('project-range', 'project-score');
-        //     addSyncListeners('presentation-range', 'presentation-score');
-        //     addSyncListeners('qa-range', 'qa-score');
-        // });
     </script>
 @endsection

@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('admin.adminlayout')
 
 @section('title')
     ປື້ມບົດຈົບຊັ້ນ
@@ -32,51 +32,47 @@
                         $rank = 1;
                     @endphp
                     @foreach ($thesisTopics as $topic)
-                        @if ($topic->book->verified == 1)
-                            <tr>
-                                {{-- <td>{{ $rank++ }}</td> --}}
-                                <td>{{ $topic->studentGroup->group_number }}</td>
-                                <td>{{ $topic->topic_name }}</td>
-                                <td>
-                                    @if ($topic->book)
+                        <tr>
+                            {{-- <td>{{ $rank++ }}</td> --}}
+                            <td>{{ $topic->studentGroup->group_number }}</td>
+                            <td>{{ $topic->topic_name }}</td>
+                            <td>
+                                @if ($topic->book)
+                                    @php
+                                        $bookFilePath = $topic->book->book_file;
+                                        $bookFileName = pathinfo($bookFilePath, PATHINFO_FILENAME);
+                                        $bookFileExtension = pathinfo($bookFilePath, PATHINFO_EXTENSION);
+                                        $bookFileNameWithoutTimestamp =
+                                            preg_replace('/^\d+_/', '', $bookFileName) . '.' . $bookFileExtension;
+                                    @endphp
+                                    <a href="{{ asset('storage/' . $topic->book->book_file) }}"
+                                        target="_blank">{{ $bookFileNameWithoutTimestamp }}</a>
+                                @else
+                                    No PDF available
+                                @endif
+                            </td>
+                            <td>
+                                @if ($topic->edits->isNotEmpty())
+                                    @foreach ($topic->edits as $edit)
                                         @php
-                                            $bookFilePath = $topic->book->book_file;
+                                            $bookFilePath = $edit->thesis_edit_file;
                                             $bookFileName = pathinfo($bookFilePath, PATHINFO_FILENAME);
                                             $bookFileExtension = pathinfo($bookFilePath, PATHINFO_EXTENSION);
                                             $bookFileNameWithoutTimestamp =
                                                 preg_replace('/^\d+_/', '', $bookFileName) . '.' . $bookFileExtension;
                                         @endphp
-                                        <a href="{{ asset('storage/' . $topic->book->book_file) }}"
-                                            target="_blank">{{ $bookFileNameWithoutTimestamp }}</a>
-                                    @else
-                                        No PDF available
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($topic->edits->isNotEmpty())
-                                        @foreach ($topic->edits as $edit)
-                                            @php
-                                                $bookFilePath = $edit->thesis_edit_file;
-                                                $bookFileName = pathinfo($bookFilePath, PATHINFO_FILENAME);
-                                                $bookFileExtension = pathinfo($bookFilePath, PATHINFO_EXTENSION);
-                                                $bookFileNameWithoutTimestamp =
-                                                    preg_replace('/^\d+_/', '', $bookFileName) .
-                                                    '.' .
-                                                    $bookFileExtension;
-                                            @endphp
-                                            <a href="{{ asset('storage/' . $edit->thesis_edit_file) }}" target="_blank">
-                                                {{ $bookFileNameWithoutTimestamp }}
-                                                @if ($edit->accept == 1)
-                                                    <i class="bi bi-check-circle-fill text-success"></i>
-                                                @endif
-                                            </a><br>
-                                        @endforeach
-                                    @else
-                                        <span>ຍັງບໍ່ໄດ້ສົ່ງສະບັບແກ້ໄຂ</span>
-                                    @endif
-                                </td>
-                            </tr>
-                        @endif
+                                        <a href="{{ asset('storage/' . $edit->thesis_edit_file) }}" target="_blank">
+                                            {{ $bookFileNameWithoutTimestamp }}
+                                            @if ($edit->accept == 1)
+                                                <i class="bi bi-check-circle-fill text-success"></i>
+                                            @endif
+                                        </a><br>
+                                    @endforeach
+                                @else
+                                    <span>ຍັງບໍ່ໄດ້ສົ່ງສະບັບແກ້ໄຂ</span>
+                                @endif
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>

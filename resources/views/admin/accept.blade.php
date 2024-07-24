@@ -1,12 +1,12 @@
-@extends('layout')
+@extends('admin.adminlayout')
 
 @section('title')
-    ຄໍາຂໍອາຈານທີ່ປຶກສາ
+    ຍ້ອມຮັບ
 @endsection
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">ຄໍາຂໍອາຈານທີ່ປຶກສາທັງໝົດ</h3>
+            <h3 class="card-title">ຍອມຮັບການແກ້ໄຂ</h3>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -16,26 +16,32 @@
                         {{-- <th class="col-1">#</th> --}}
                         <th class="col-1">ກຸ່ມ</th>
                         <th class="col-5">ຫົວຂໍ້ບົດຈົບຊັ້ນ</th>
-                        <th>ອາຈານທີ່ຂໍ</th>
-                        <th>ອະນຸຍາດ / ບໍ່ອະນຸຍາດ</th>
+                        <th>ລືີ້ງປື້ມ(ສະບັບແກ້ໄຂ)</th>
+                        <th>Accept / Reject</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($studentGroups as $Group)
-                        <tr>
-                            <td>{{ $Group->group_number }}</td> <!-- Group Number -->
-                            <td>
-                                @if ($Group->thesisTopic)
-                                    {{ $Group->thesisTopic->topic_name }} <!-- Topic Name -->
-                                @else
-                                    No Topic Assigned
-                                @endif
-                            </td>
-                            <td>{{ $Group->advisor }}</td>
-                            <td>
-                                <a href="{{ route('allow', $Group->id) }}" class="btn btn-sm btn-success">ອະນຸຍາດ</a>
-                            </td>
-                        </tr>
+                    @foreach ($thesisTopics as $topic)
+                        @foreach ($topic->edits as $edit)
+                            @if ($edit->accept != 1)
+                                <tr>
+                                    <td>{{ $topic->studentGroup->group_number }}</td>
+                                    <td>{{ $topic->topic_name }}</td>
+                                    <td>
+                                        @if ($topic->edits->isNotEmpty())
+                                            <a href="{{ asset('storage/' . $edit->file_path) }}" target="_blank">
+                                                View Edit
+                                            </a><br>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('change', $edit->id) }}" class="btn btn-success"><i
+                                            class="bi bi-check-lg text-light"></i></a>
+                                        {{-- <a href="{{ route('change', $edit->id) }}" class="btn btn-danger"><i class="bi bi-x-lg"></i></a> --}}
+                                    </td>
+                                </tr>
+                            @endif
+                        @endforeach
                     @endforeach
                 </tbody>
             </table>
@@ -43,7 +49,6 @@
         <!-- /.card-body -->
     </div>
 @endsection
-
 
 @section('head-link')
     <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">

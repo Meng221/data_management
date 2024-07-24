@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('admin.adminlayout')
 
 @section('title')
     ອາຈານທີ່ປຶກສາ
@@ -23,16 +23,16 @@
                     <div class="card-body advisor-card">
                         <h5 class="card-title">{{ $item->fullname }}</h5>
                         <br>
-                        <p class="d-block text-start text-dark">{{ $item->email }}</p>
+                        <p class="d-block text-start">{{ $item->email }}</p>
                         <p class="card-text text-start"><small class="text-muted">Last Updated:
-                            {{ $item->updated_at }}</small></p>
+                                {{ $item->updated_at }}</small></p>
                     </div>
                     @if (auth()->check())
                         @if (auth()->user()->user_type === 'teacher')
                             <div class="card-body border-top border-1 d-flex justify-content-end gap-3">
-                                <a href="{{ route('editadvisor', $item->id) }}"
+                                <a href="{{ route('admin.editadvisor', $item->id) }}"
                                     class="link-secondary text-decoration-none"><i class="bi bi-pencil-square"></i>Edit</a>
-                                <a href="{{ route('advisordelete', $item->id) }}"
+                                <a href="{{ route('admin.advisordelete', $item->id) }}"
                                     class="link-secondary text-decoration-none"
                                     onclick="return confirm('Do you wnat to delete {{ $item->fullname }}?')"
                                     class="text-dark"><i class="bi bi-trash3-fill"></i>Delete</a>

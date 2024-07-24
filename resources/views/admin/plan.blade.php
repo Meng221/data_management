@@ -1,18 +1,18 @@
-@extends('layout')
+@extends('admin.adminlayout')
 
 @section('title')
     ແຜນການຕ່າງໆ
 @endsection
 
 @section('content')
-    {{-- @if (auth()->check())
+    @if (auth()->check())
         @if (auth()->user()->user_type === 'teacher')
             <button class="btn btn-primary" id="addBtn" data-bs-toggle="modal" data-bs-target="#postModal">+
                 ສ້າງໂພສ
             </button>
             <hr>
         @endif
-    @endif --}}
+    @endif
 
 
     {{-- this form fo create post --}}
@@ -24,7 +24,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/insert" method="post" enctype="multipart/form-data">
+                    <form action="{{route('admin.insert')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row mb-4">
                             <label for="fullname-input" class="col-sm-3 col-form-label">ຊື່ຫົວຂໍ້</label>
@@ -92,26 +92,25 @@
                 <div class="mx-3">
                     <h5 class="mt-0">{{ $item->plan_title }}</h5>
                     <p>{{ $item->description }}</p>
-                    <a href="{{ asset('storage/' . $item->pdf_data) }}" target="_blank" rel="noopener noreferrer">View
-                        Detail</a>
-                    <p class="card-text text-end"><small class="text-muted">Date of post: </small>{{ $date }}
+                    <a href="{{ asset('storage/' . $item->pdf_data) }}" target="_blank" rel="noopener noreferrer">View Detail</a>
+                    <p class="card-text text-start"><small class="text-muted">Date of post: </small>{{ $date }}
                     </p>
                 </div>
             </div>
-            {{-- @if (auth()->check())
+            @if (auth()->check())
                 @if (auth()->user()->user_type === 'teacher')
                     <div class="d-flex gap-3" target="_blank">
 
-                        <a href="{{ route('edit', $item->id) }}" class="text-dark" id="addBtn"><i
+                        <a href="{{ route('admin.edit', $item->id) }}" class="text-dark" id="addBtn"><i
                                 class="fas fa-edit"></i>Edit</a>
-                        <a href="{{ route('delete', $item->id) }}"
+                        <a href="{{ route('admin.delete', $item->id) }}"
                             onclick="return confirm('Do you want to delete {{ $item->plan_title }}?')" class="text-dark"><i
                                 class="bi bi-trash-fill"></i>Delete
                         </a>
-                        <a href="#" class="text-dark"><i class="fas fa-save me-1"></i>Save</a>
+                        {{-- <a href="#" class="text-dark"><i class="fas fa-save me-1"></i>Save</a> --}}
                     </div>
                 @endif
-            @endif --}}
+            @endif
 
         </div>
     @endforeach

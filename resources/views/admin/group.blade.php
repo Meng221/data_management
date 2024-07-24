@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('admin.adminlayout')
 
 @section('title')
     ກຸ່ມທັງໝົດ
@@ -7,8 +7,9 @@
 @section('content')
     <div class="student-groups">
         <h1 class="mb-3">Groups</h1>
-
-
+        <div class=" mb-3">
+            <button class="btn btn-primary" id="exportExcel">Export to Excel</button>
+        </div>
         <div class="table-container">
             <table class="table table-bordered table-custom">
                 <thead class="text-center">
@@ -46,11 +47,7 @@
                                     <td scope="row" rowspan="{{ $studentCount }}" class="vertical-align-middle">
                                         {{ $group->thesisTopic->type->name }}</td>
                                     <td scope="row" rowspan="{{ $studentCount }}" class="vertical-align-middle">
-                                        {{ $group->advisor }}
-                                        @if ($group->allow == 1)
-                                            <i class="bi bi-check-circle-fill text-success"></i>
-                                        @endif
-                                    </td>
+                                        {{ $group->advisor }}</td>
                                 @endif
                             </tr>
                         @endforeach
@@ -62,3 +59,16 @@
 @endsection
 
 
+@section('page-script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+    <script>
+        document.getElementById('exportExcel').addEventListener('click', function() {
+            var table = document.querySelector('.table-custom');
+            var filename = 'student_groups.xlsx';
+            var ws = XLSX.utils.table_to_sheet(table);
+            var wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Student Groups');
+            XLSX.writeFile(wb, filename);
+        });
+    </script>
+@endsection

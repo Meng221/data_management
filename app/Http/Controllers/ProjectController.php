@@ -7,6 +7,7 @@ use App\Models\Type;
 use App\Models\StudentGroup;
 use App\Models\Student;
 use App\Models\ThesisTopic;
+use App\Models\Plans;
 
 class ProjectController extends Controller
 {
@@ -26,8 +27,9 @@ class ProjectController extends Controller
     function group() {
         return view('group');
     }
-    function plan() {
-        return view('plan');
+    function getPost() {
+        $posts = Plans::all();
+        return view('plan', compact('posts'));
     }
     function about() {
         return view('about');

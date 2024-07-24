@@ -22,6 +22,8 @@ class StudentGroup extends Model
         'study_time',
         'advisor',
         'allow',
+        'user_id',
+        'advisor_id',
     ];
 
     public function students()

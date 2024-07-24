@@ -16,27 +16,26 @@
                 </ul>
             </div>
         @endif
-        {{-- @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif --}}
+
         <div class="row mb-4">
-            <div class="col-md-3 col-sm-6 col-12 ">
-                <div class="info-box" style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#AvisorReModal">
-                    <span class="info-box-icon bg-info"><i class="bi bi-person-up"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">ຂໍ້ມູນບົດຈົບຊັ້ນ</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
             <!-- /.col -->
-
             @if (auth()->check())
-                @if (auth()->user()->user_type === 'teacher')
+                @if (auth()->user()->user_type === 'student')
+                    <div class="col-md-3 col-sm-6 col-12 ">
+                        <div class="info-box" style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#AvisorReModal">
+                            <span class="info-box-icon bg-info"><i class="bi bi-person-up"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">ຂໍ້ມູນບົດຈົບຊັ້ນ</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                @endif
+            @endif
+            @if (auth()->check())
+                @if (auth()->user()->user_type === 'student')
                     <div class="col-md-3 col-sm-6 col-12">
                         <div class="info-box " style="cursor: pointer" data-bs-toggle="modal"
                             data-bs-target="#SentThesisModal">
@@ -51,18 +50,24 @@
                     </div>
                 @endif
             @endif
-            <div class="col-md-3 col-sm-6 col-12">
-                <div class="info-box" style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#SentEditModal">
-                    <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></i></span>
+            @if (auth()->check())
+                @if (auth()->user()->user_type === 'student')
+                    <div class="col-md-3 col-sm-6 col-12">
+                        <div class="info-box" style="cursor: pointer" data-bs-toggle="modal"
+                            data-bs-target="#SentEditModal">
+                            <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></i></span>
 
-                    <div class="info-box-content">
-                        <span class="info-box-text">ສົ່ງປື້ມທີ່ແກ້ໄຂແລ້ວ<br>(ຫຼັງປ້ອງກັນແລ້ວ)</span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">ສົ່ງປື້ມທີ່ແກ້ໄຂແລ້ວ<br>(ຫຼັງປ້ອງກັນແລ້ວ)</span>
 
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
                     </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
+                @endif
+            @endif
+
             <!-- /.col -->
             @if (auth()->check())
                 @if (auth()->user()->user_type === 'teacher')
@@ -87,14 +92,6 @@
             <div class="card col-lg-8">
                 <div class=" modal-header">
                     <h3 class="card-title">ຈໍານວນກຸ່ມໃນແຕ່ລະປະເພດ</h3>
-                    @if (auth()->check())
-                        @if (auth()->user()->user_type === 'teacher')
-                            <div>
-                                <a href="" class="btn btn-light w-100" data-bs-toggle="modal"
-                                    data-bs-target="#addTypeModal"><i class="bi bi-plus"></i></a>
-                            </div>
-                        @endif
-                    @endif
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0">
@@ -182,39 +179,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="addTypeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="card-title text-center">ເພີ່ມປະເພດບົດ</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div><!-- end card header -->
-                    <div class="card-body">
-                        <form action="{{ route('addtype') }}" method="POST">
-                            @csrf
-                            <div class="row mb-4">
-                                <label for="typename-input" class="col-sm-3 col-form-label">ຊື່ປະເພດ</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="typename-input" name="typename"
-                                        required>
-                                </div>
-                            </div><!-- end row -->
-                            <div class="row justify-content-end">
-                                <div class="col-sm-9">
-                                    <div class="text-end">
-                                        <button type="submit" class="btn btn-primary w-md px-4">ເພີ່ມ</button>
-                                        <button type="button" class="btn btn-danger w-md" data-bs-dismiss="modal"
-                                            aria-label="Close">ຍົກເລິກ</button>
-                                    </div>
-                                </div><!-- end col -->
-                            </div><!-- end row -->
-                        </form><!-- end form -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="giveScoreModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="giveScoreModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">

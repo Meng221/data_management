@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('admin.adminlayout')
 
 @section('title')
     ປ້ອງກັນ
@@ -6,6 +6,7 @@
 
 @section('content')
     <h4>ຜົນການສອບບົດຈົບຊັ້ນ</h4>
+    <button class="btn btn-primary mb-3" id="exportExcel">Export to Excel</button>
     <div style="overflow-x: auto;">
         <table class="table table-bordered" style="width: 120%">
             <thead class="text-center">
@@ -18,7 +19,6 @@
                     <th scope="col">ຊື່ບົດຈົບຊັ້ນພາສາອັງກິດ</th>
                     <th scope="col">ປະເພດ</th>
                     <th scope="col" style="width: 80px;">ສົ່ງປື້ມ</th>
-                    <th scope="col">ສະຖານະ</th>
                     <th scope="col">ອາຈານທີ່ປຶກສາ</th>
                 </tr>
             </thead>
@@ -57,17 +57,6 @@
                                     @endif
                                 </td>
                                 <td scope="row" rowspan="{{ $studentCount }}" class="vertical-align-middle">
-                                    @if ($group->status == 1)
-                                        <p class="text-success">ຜ່ານ</p>
-                                    @elseif ($group->status == Null)
-                                        <p class="text">ຍັງບໍ່ໄດ້ສອບ</p>
-
-                                    @else
-                                        <p class="text-danger">ບໍ່ຜ່ານ</p>
-                                    @endif
-
-                                </td>
-                                <td scope="row" rowspan="{{ $studentCount }}" class="vertical-align-middle">
                                     {{ $group->advisor }}
                                 </td>
                             @endif
@@ -77,4 +66,27 @@
             </tbody>
         </table>
     </div>
+@endsection
+
+@section('page-script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+
+    <!-- JavaScript to handle the export -->
+    <script>
+        document.getElementById('exportExcel').addEventListener('click', function() {
+            var table = document.querySelector('.table-bordered');
+            var filename = 'student_groups.xlsx';
+
+            // Adjust table width for export to Excel
+            table.style.width = 'auto';
+
+            var ws = XLSX.utils.table_to_sheet(table);
+            var wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Student Groups');
+            XLSX.writeFile(wb, filename);
+
+            // Reset table width after export
+            table.style.width = '120%';
+        });
+    </script>
 @endsection

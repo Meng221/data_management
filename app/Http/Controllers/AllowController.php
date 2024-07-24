@@ -60,8 +60,15 @@ class AllowController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function change($id)
     {
-        //
+        $StudentGroup = StudentGroup::findOrFail($id);
+
+        // Toggle the status
+        $StudentGroup->allow = !$StudentGroup->allow;
+
+        // Save the changes
+        $StudentGroup->save();
+        return redirect()->back();
     }
 }

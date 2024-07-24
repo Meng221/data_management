@@ -102,17 +102,25 @@ class ThesisController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function allowSendingThesis()
     {
-        //
+        $thesisTopics = ThesisTopic::with('book')->whereNotNull('book_id')->paginate(10);
+        return view('allowsentthesis', compact('thesisTopics'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function allow($id)
     {
-        //
+        $ThesisEdit = ThesisBook::findOrFail($id);
+
+        // Toggle the status
+        $ThesisEdit->verified = !$ThesisEdit->verified;
+
+        // Save the changes
+        $ThesisEdit->save();
+        return redirect()->route('accept');
     }
 
     /**

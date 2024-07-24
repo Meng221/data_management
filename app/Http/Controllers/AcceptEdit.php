@@ -70,6 +70,6 @@ class AcceptEdit extends Controller
 
         // Save the changes
         $ThesisEdit->save();
-        return redirect()->route('accept');
+        return redirect()->route('allow-thesis');
     }
 }

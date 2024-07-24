@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('admin.adminlayout')
 
 @section('title')
     ຄໍາຂໍອາຈານທີ່ປຶກສາ
@@ -33,7 +33,8 @@
                             </td>
                             <td>{{ $Group->advisor }}</td>
                             <td>
-                                <a href="{{ route('allow', $Group->id) }}" class="btn btn-sm btn-success">ອະນຸຍາດ</a>
+                                <a href="#" class="btn btn-sm btn-success"><i class="bi bi-check-lg text-light"></i></a>
+                                <a href="#" class="btn btn-sm btn-danger"><i class="bi bi-x-lg"></i></a>
                             </td>
                         </tr>
                     @endforeach

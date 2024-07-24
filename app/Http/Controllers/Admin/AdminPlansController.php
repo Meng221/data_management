@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Plans;
 
-class PlansController extends Controller
-{
-    //
 
+class AdminPlansController extends Controller
+{
     function insert(Request $request) {
         $request->validate(
             [
@@ -121,10 +120,5 @@ class PlansController extends Controller
         // Redirect with a success message
         $request->session()->flash('success', 'Data updated successfully.');
         return redirect()->route('admin.plan');
-    }
-
-
-    public function show(){
-
     }
 }

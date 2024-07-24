@@ -59,10 +59,10 @@
 
     <div class="wrapper">
         <!-- Navbar -->
-        @include('components.navbar')
+        @include('admin.admincomponent.navbar')
         <!-- /.navbar -->
         <!-- Main Sidebar Container -->
-        @include('admin.component.menu')
+        @include('admin.admincomponent.menu')
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
@@ -82,7 +82,7 @@
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
-        @include('components.footer')
+        @include('admin.admincomponent.footer')
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
             <!-- Control sidebar content goes here -->

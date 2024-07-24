@@ -8,6 +8,7 @@ use App\Models\StudentGroup;
 use App\Models\ThesisTopic;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ScoreAndCommentController extends Controller
 {
@@ -37,6 +38,7 @@ class ScoreAndCommentController extends Controller
 
         $request->validate([
             'comment' => 'required|string',
+            'status' => 'required|in:0,1',
             'student_id' => 'required|array',
             'student_id.*' => 'required|integer|exists:students,id',
             'lesson_4_score' => 'required|array',
@@ -57,30 +59,52 @@ class ScoreAndCommentController extends Controller
             'total.*' => 'required|integer'
         ]);
 
-        $user_id = Auth::id(); // Get the authenticated user's ID
+        try {
+            // Start a database transaction
+            DB::beginTransaction();
 
-        foreach ($request->student_id as $index => $student_id) {
-            ScoreAndComment::create([
-                'thesis_topic_id' => $request->input('thesis_topic_id'),
-                'student_id' => $student_id,
-                'user_id' => $user_id, // Save the authenticated user's ID
-                'lesson_4' => $request->lesson_4_score[$index],
-                'lesson_5' => $request->lesson_5_score[$index],
-                'thesis' => $request->thesis_score[$index],
-                'poster' => $request->poster_score[$index],
-                'project' => $request->project_score[$index],
-                'q_and_a' => $request->qascore[$index],
-                'presentation' => $request->present_score[$index],
-                'average' => $request->total[$index],
+            // Get the authenticated user's ID
+            $user_id = Auth::id();
+
+            // Save scores and comments for each student
+            foreach ($request->student_id as $index => $student_id) {
+                ScoreAndComment::create([
+                    'thesis_topic_id' => $request->input('thesis_topic_id'),
+                    'student_id' => $student_id,
+                    'user_id' => $user_id,
+                    'lesson_4' => $request->lesson_4_score[$index],
+                    'lesson_5' => $request->lesson_5_score[$index],
+                    'thesis' => $request->thesis_score[$index],
+                    'poster' => $request->poster_score[$index],
+                    'project' => $request->project_score[$index],
+                    'q_and_a' => $request->qascore[$index],
+                    'presentation' => $request->present_score[$index],
+                    'average' => $request->total[$index],
+                ]);
+            }
+
+            // Save a general comment about the group's performance
+            Comment::create([
+                'student_group_id' => $request->input('group_id'),
+                'comment' => $request->comment,
+                'user_id' => $user_id,
             ]);
-        }
-        Comment::create([
-            'student_group_id' => $request->input('group_id'),
-            'comment' => $request->comment,
-            'user_id' => $user_id,
-        ]);
 
-        return redirect()->route('home')->with('success', 'Scores and comments have been successfully saved.');
+            // Create or update the student group status
+            $studentGroup = StudentGroup::find($request->input('group_id'));
+            if ($studentGroup) {
+                $studentGroup->status = $request->status;
+                $studentGroup->save();
+            }
+
+            // Commit the transaction
+            DB::commit();
+
+            return redirect()->route('home')->with('success', 'Scores and comments have been successfully saved.');
+        } catch (\Exception $e) {
+            // Rollback the transaction on error
+            DB::rollback();
+        }
     }
 
     /**
